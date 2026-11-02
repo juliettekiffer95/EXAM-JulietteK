@@ -1,6 +1,6 @@
 ---
 title: "Species Diversity and Distributions"
-author: "Your name here"
+author: "Juliette Kiffer"
 format:
   html:
     number-sections: true
@@ -22,26 +22,6 @@ execute:
 ---
 
 # Instructions
-
-## English
-
-First choose your language and delete the section of the document in the other language.
-
-Answer the questions precisely but briefly: the questions are detailed to guide you so there are many of them.
-Don't waste your time repeating the course: you have all documents with you, copying their content is not valuable.
-To answer factual questions, you don't need to make sentences: e.g., just write "4." to answer the question "how much are 2 + 2?".
-
-Before you begin:
-
-1.  Type your name in the header of the document, in the author field.
-2.  Run the following in the terminal (answer *No* if a message box asks you if you want to close some files):
-
-`quarto publish gh-pages index.qmd`
-
-During your work: render the document regularly (at the end of each question, for example) so that problems do not pile up.
-
-At the end of the exam: save the file, make a commit and push the project to GitHub.
-Do not modify the project after the exam has finished.
 
 ## Français
 
@@ -300,6 +280,14 @@ pielou_niches
 - $S_{J3} = S_{>0} + 3 S_1 - 3 S_2 + S_3$
 
 > Estimez rapidement la richesse asymptotique de la forêt en utilisant les estimateurs jackknife et les règles de @Brose2003.
+>
+> Richesse de la forêt :
+>
+> A = 100+20 = 120 (selon Jack 1)
+>
+> B= 80+30\*2- 20 = 120 (selon jack 2)
+>
+> C = 400 (selon \>jack 3)
 
 ## Diversité phylogénétique
 
@@ -318,14 +306,38 @@ tree_3sp(0.5)
 
 > Quelle est la diversité phylogénétique d'ordre 0 (PD de Faith) d'une communauté contenant les trois espèces, dont l'arbre phylogénétique est celui de la figure ?
 
+H1 = 3\* (0.3 \* (0.7/0.3) = 2.1
+
+H2 = 2\* (0.5\* (0.5/0.5) = 1
+
+Entropie phylogénétique = 0.5\*2.1+0.5\*1 = 1.5
+
+La diversité phylogéntique est
+
+```{r}
+exp(1.5)
+
+```
+
 > Quelle est l'étendue possible des valeurs de `h` ?
+>
+> h peut aller de 0 à 1
 
 > Quel est l'effet de `h` sur la valeur de PD ?
+>
+> h permet de montrer une similarité plus ou moins grande entre les espèces (distance phylogénique)
 
 > Ecrivez la valeur de PD en fonction de \`h\`.
+>
+> PH = sum (h \* Hh)
+>
+> > Hh étant l'entropie au temps à la longueur h.
 
 > Quel est la richesse (taxonomique, pas phylogénétique) de la communauté ?
 > Expliquez comment $h$ permet de prendre en compte la proximité entre les espèces B et A.
+>
+> La richesse taxonomique était de 3 car 3 branche à la fin.
+> h permet d'ajouter la distance phylogénénique dans le calcul de la diversité.
 
 > Si les botanistes sont en désaccord sur la synonymie ou non des espèces B et A et qu'une phylogénie montre que leur distance $h$ est faible, proposez une méthode pour les mettre d'accord.
 
@@ -372,12 +384,35 @@ autoplot(comm_lnorm)
 
 > Quelle est la richesse des communautés observées ?
 > Quel est l'abondance de l'espèce la plus rare (approximativement, lue sur le graphique) comparativement au nombre d'arbres total ?
+>
+> Les communauté observées ont une richesse spécifique de 100. L'abondance de l'espèce la plus rare est de 5 alors qu'il y a 1\*10\^6 arbres au total.
 
 > Qu'observe-t-on pour un échantillon de taille raisonnable, disons 6,25ha avec 600 arbres / ha ?
 > Faites la figure.
 > Attention à ne pas détruire la variable `comm_lnorm` en réutilisant le code.
+>
+> ```{r}
+>
+>
+> ```
 
 > Tracez le profil de diversité des deux communautés
+>
+> ```{r}
+> comm_lnorm %>% 
+>   profile_hill(estimator="UnveilJ") %>% 
+>   autoplot() +
+>   # Don't print the legend
+>   theme(legend.position = "none")
+>
+>
+> ###on fait pareil avec naive
+> p6_abd %>% 
+>   profile_hill(estimator="naive") %>% 
+>   autoplot() +
+>   # Don't print the legend
+>   theme(legend.position = "none")
+> ```
 
 > Quelle est la communauté la plus diverse ?
 > Faites le lien avec la valeur de $\sigma$.
